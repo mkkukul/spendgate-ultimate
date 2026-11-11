@@ -1,40 +1,39 @@
 # SpendGate 2.0: The Agentic Trust Engine 🛡️
 
-> **"AI negotiates. Gates decide. Immutable Ledger proves."**
+> **"AI negotiates. Gates decide. Cryptography proves."**
 > _No cryptographic certificate, no payment._
 
-## 🚀 The Ultimate Hackathon Fusion
+## 🚀 The Problem
 
-SpendGate 2.0 is the culmination of multiple AI prototypes, combining the best features to solve the biggest challenge in **Agentic Commerce**: How do we let AI agents transact autonomously without losing trust, control, or security?
+In the era of Agentic Commerce, autonomous AI agents can browse and purchase items on behalf of humans. However, letting an AI spend money freely is a massive security risk. A simple spending limit is not enough. We need to ensure the AI is buying the **right thing**, from the **right seller**, at the **right price**, and have **indisputable proof** of why the transaction occurred.
 
-### 🧬 Core Innovations (The "100/100" Stack):
+## 💡 The Solution: SpendGate 2.0
 
-1. **Agent-to-Agent (A2A) Commerce:** The AI is not buying a toaster; it's a Data Agent purchasing 1M API tokens from a Service Provider Agent to train an NLP model.
-2. **Dynamic Spending Trust Engine:** Static limits are dead. SpendGate uses a Trust Score. If the AI makes a successful purchase, its dynamic limit increases. If a limit is exceeded or a transaction is voided, the limit is tightened.
-3. **Adversarial AI + Market Intel:** The _Buyer Agent_ wants to buy. The _Devil's Advocate Agent_ analyzes market data (FOMO Index, 90-day peaks) and argues to wait for a better price.
-4. **Price/Value Option:** We utilize the `Authorize -> Wait -> Capture/Void` flow to lock funds, wait for the best market rate, and settle only when the value is optimal.
-5. **Hash-Chained Decision Certificates:** Every decision generates an `ed25519` signed JSON certificate. Crucially, it contains the `prev_cert_hash`, creating an immutable, verifiable ledger of all AI spending behavior.
+SpendGate is a Full-Stack Deterministic Control Plane that sits between the AI and the Payment Gateway.
 
-## 🛠️ PayPal API Mock Architecture
+### 🧬 Core Innovations:
 
-Due to regional restrictions (Turkey), live PayPal Sandbox API keys could not be provisioned. To ensure the project is fully functional and reviewable by the jury, we implemented a **PayPal Mock Adapter**. The mock strictly adheres to PayPal's Orders v2 JSON schema (`CREATED`, `AUTHORIZE`, `CAPTURE`, `VOID`).
+1. **5W1H Need Analysis:** The system structures the purchase intent (What, Why, When, Budget) before any transaction begins.
+2. **Deterministic Gate Engine:** AI might hallucinate, but math doesn't. A robust, rule-based engine evaluates every transaction against strict Mandate (budget), Seller Allowlist, and Stock/Delivery constraints. If a gate turns red, **the payment API is never even contacted.**
+3. **Cryptographic Decision Certificates:** Every successful transaction generates an immutable receipt. It includes a SHA-256 hash of the decision payload and a digital HMAC signature. This serves as indisputable evidence for disputes or tax audits.
+4. **PayPal Mock Adapter:** The system simulates the full `Orders v2` lifecycle (`Create -> Authorize`). The architecture is ready to switch to live PayPal credentials instantly.
 
-## 💻 Tech Stack
+## 🏗️ Architecture
 
-- **Framework:** Next.js 15 (App Router, Turbopack)
-- **Styling:** Tailwind CSS, Framer Motion
-- **Icons:** Lucide React
-- **I18n:** Full native support for 9 languages (EN, TR, FR, ES, DE, IT, AR, PT, RU) with RTL support for Arabic.
+- **Frontend:** Next.js 15 (App Router), Tailwind CSS, Framer Motion (Premium Glassmorphism UI).
+- **Backend API:** Next.js API Routes (`/api/process`).
+- **Core Logic:** TypeScript (`gate-engine.ts`, `certificate.ts`).
+- **I18n:** Native English (Primary) with 9 language support.
 
-## 🎮 How to Run & Test
+## 🎮 How to Run & Test the Engine
 
-1. `npm install`
-2. `npm run dev`
-3. Open [http://localhost:3000](http://localhost:3000)
-4. **Test the Trust Engine:** Click **"Request Service"**. Notice the Dynamic Limit is set to $50.
-5. Click **"Approve & Authorize"**. Watch the Price Option window as the API cost drops.
-6. Click **"Capture & Settle"**. Watch the Trust Score go up, and the cryptographic hash chain expand.
+1. Clone the repo: `git clone https://github.com/mkkukul/spendgate-ultimate.git`
+2. Install dependencies: `npm install`
+3. Run the development server: `npm run dev`
+4. Open [http://localhost:3000](http://localhost:3000)
+5. **Test the Blocking Gate:** Click **"Attempt Malicious Buy"** (Red Button). The engine will catch that the price ($75) exceeds the budget ($60) and the seller is unverified. The transaction is blocked before reaching PayPal.
+6. **Test the Success Flow:** Click **"Execute Secure Buy"** (Blue Button). All gates pass. PayPal Mock authorizes the payment, and a **Cryptographically Signed Decision Certificate** is generated and displayed in the terminal.
 
 ## 🇹🇷 Türkçe Özet
 
-SpendGate 2.0, yapay zekanın harcamalarını kontrol eden deterministik bir katmandır. Dinamik Güven Skoru (Trust Score) sayesinde ajanın limitleri başarısına göre artar veya azalır. İki AI ajanı (Alıcı ve Şeytanın Avukatı) piyasa zekasıyla çatışır. Her işlem sonunda bir önceki işlemin şifresini (hash) içeren, değiştirilemez bir "Karar Sertifikası" üretilir. Sertifika yoksa ödeme yoktur.
+SpendGate 2.0, otonom yapay zekaların para harcarken kontrolü kaybetmemesini sağlayan bir "Güven Motorudur". Sadece bütçe kontrolü yapmaz; satıcı güvenliğini, stok durumunu ve teslimat süresini **Deterministik Kapılar** (Kural Motoru) ile denetler. Eğer bir kural ihlal edilirse (örneğin fiyat bütçeyi aşarsa), sistem PayPal API'sine hiç istek atmadan işlemi engeller. Başarılı her işlem sonunda ise, bir daha değiştirilemeyecek şekilde **Kriptografik olarak imzalanmış bir Karar Sertifikası** üretir.
